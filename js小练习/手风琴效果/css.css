@@ -1,0 +1,37 @@
+body,ul,li,p,h3{
+	margin:0;
+	padding:0;
+}
+ul,ol{
+	list-style: none;
+}
+.wrapper{
+	width:838px;
+	height:128px;
+	border:1px solid #000;
+}
+div{
+	float: left;
+}
+img{
+	float: right;
+	height: 72px;
+    width: 117px;
+}
+li{
+	width: 156px;
+    height: 128px;
+    float: left;
+    overflow: hidden;
+    margin-right: 10px;
+}
+a:after{
+	display:block;
+	clear:both;
+	content:"";
+	visibility:hidden;
+	height:0
+}
+a{
+	zoom:1;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>照片墙--图片预加载</title>
+</head>
+<body>
+<img src="http://d.hiphotos.baidu.com/image/pic/item/e61190ef76c6a7ef0dcd59f8f8faaf51f2de6601.jpg" width="100" height="100" onmouseover="this.src='http://a.hiphotos.baidu.com/image/pic/item/9f2f070828381f30b9647d77ac014c086f06f0eb.jpg';" onmouseout="this.src='http://d.hiphotos.baidu.com/image/pic/item/e61190ef76c6a7ef0dcd59f8f8faaf51f2de6601.jpg';">
+	<script>
+		window.onload=function(){
+			var oImg=new Image();
+			oImg.onload=function(){
+				alert("图片预加载完成！");
+			}
+			oImg.onerror=function(){
+				alert("失败！");
+			}
+			oImg.src='http://a.hiphotos.baidu.com/image/pic/item/9f2f070828381f30b9647d77ac014c086f06f0eb.jpg';
+		};
+	</script>
+</body>
+</html>

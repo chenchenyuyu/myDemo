@@ -1,0 +1,33 @@
+﻿加border后div反而变宽:
+原因：
+oDiv.style.width=oDiv.offsetWidth-1+'px';
+
+	#div1{
+			height:100px;
+			width: 100px;
+			background: red;
+			/*border:1px solid #000;*/
+当加上border的时候，div的宽度，反而加宽，原因：offsetWidth有关
+		}
+
+第一次：width:100px   offsetWidth:102px  width:102-1=101px
+
+
+
+第二次：width:101px   offsetWidth:103px  width:103-1=102px
+
+
+第三次：width:102px   offsetWidth:104px  width:104-1=103px
+
+所以其加上border之后宽度反而加宽
+
+
+解决办法：
+1.不给div加边框，在外边加一个div设边框
+2.不用offsetWidth,改用style.width(取的是行间样式),或再用获取非行间样式currentStyle获取width
+
+//oDiv.style.width=oDiv.offsetWidth-1+'px';
+				//oDiv.style.width=oDiv.style.width-1+'px';
+//oDiv.style.width是一个字符串要将用parseInt()它转化
+				//oDiv.style.width=oDiv.style.width-1+'px';
+				oDiv.style.width=parseInt(getStyle(oDiv,'width'))-1+'px';

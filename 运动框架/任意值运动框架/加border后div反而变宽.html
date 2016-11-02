@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>加border后div反而变宽</title>
+	<style type="text/css">
+		#div1{
+			height:100px;
+			width: 100px;
+			background: red;
+			/*border:1px solid #000;*/
+			当加上border的时候，div的宽度，反而加宽，原因：offsetWidth有关
+		}
+
+	</style>
+	<script type="text/javascript">
+			function getStyle(obj,attr){
+				if(obj.currentStyle){
+					return obj.currentStyle[attr];	
+				}else{
+					return getComputedStyle(obj,false)[
+					attr];
+				}
+
+			}
+
+		setInterval(function(){
+				var oDiv=document.getElementById('div1');
+				//oDiv.style.width=oDiv.offsetWidth-1+'px';
+				//oDiv.style.width=oDiv.style.width-1+'px';
+				//oDiv.style.width是一个字符串要将用parseInt()它转化
+				//oDiv.style.width=oDiv.style.width-1+'px';
+				oDiv.style.width=parseInt(getStyle(oDiv,'width'))-1+'px';
+		},30);
+
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+</body>
+</html>

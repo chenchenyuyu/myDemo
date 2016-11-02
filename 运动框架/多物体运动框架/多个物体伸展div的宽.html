@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多个物体伸展div的宽</title>
+	<style type="text/css">
+		div{
+			height:60px;
+			width:50px;
+			background: red;
+			margin-bottom: 20px;
+
+		}
+	</style>
+	<script type="text/javascript">
+window.onload=function(){
+	var aDiv=document.getElementsByTagName('div');
+	var i=0;
+	for(i=0;i<aDiv.length;i++){//为每一个div加上事件
+		aDiv[i].timer=null;//往每一的div身上加上一个定时器，解决定时器公用问题
+		aDiv[i].onmouseover=function(){
+			startMove(this,300);
+		};
+
+		aDiv[i].onmouseout=function(){
+					startMove(this,100);//this表示当前对象，即传入的obj对象
+		}
+	}
+				
+
+};
+//采用缓冲运动的原理
+	function startMove(obj,iTarget){//obj指定是哪一个div
+		clearInterval(obj.timer);
+	//每次开始定时器之前都要将定时器清除，如果onmouseover下一个元素，则会出现上一个元素还没有被收回的现象产生，是因为大家共同抢一个定时器的原因
+		obj.timer=setInterval(function(){
+				var iSpeed=(iTarget-obj.offsetWidth)/8;
+				iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+
+				if(obj.offsetWidth==iTarget){
+						clearInterval(obj.timer);
+				}else{
+					obj.style.width=obj.offsetWidth+iSpeed+'px';
+				}
+
+		},30);
+
+
+	}
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+	<div></div>
+	<div></div>
+	<div></div>
+
+</body>
+</html>

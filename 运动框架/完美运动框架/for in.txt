@@ -1,0 +1,8 @@
+﻿for in
+
+数组：可以用 for 和for……in
+//for in不可以控制其顺序，所以一般用for……in
+json:for……in
+
+
+

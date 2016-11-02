@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$.get()和$.post()请求</title>
+	<script src="jquery-3.1.0.js"></script>
+</head>
+<body>
+	<button id="btn">发送一个ajax请求</button>
+	<div id="box"></div>
+	<script>
+	$("#btn").click(function(){
+		$.get('demo1.php',{'username':'科学家'},function(data){
+			$("#box").html(data);
+
+		});
+	});
+		
+		//$.post();
+		//$.ajax()
+	</script>
+</body>
+</html>

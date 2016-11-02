@@ -1,0 +1,22 @@
+﻿仿FLASH的图片轮换效果
+
+
+startMove(oSmallUl,'left',-(iNow-1)*aSmallLi[0].offsetWidth);	
+//点击图片时，将相应图片在ul中居中效果
+
+第几张图片     其left的变化
+0               0
+
+1              0
+
+2            -1*li.width
+
+3            -2*li.width
+
+n           -(n-1)*li.width
+
+
+m-1        -(m-2)*li.width
+
+
+m          -(m-2)*li.width

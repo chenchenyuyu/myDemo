@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>苹果导航菜单</title>
+	<style>
+		body{
+			margin:0;
+		}
+		#div1{
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		text-align: center;
+		/*border: 1px solid red;*/
+		}
+	</style>
+	<script>
+		document.onmousemove=function(ev){
+			var oEvent=ev||event;
+			//ev包含鼠标的信息的
+			var oDiv=document.getElementById("div1");
+			var aImg=document.getElementsByTagName('img');
+			var aTxt=document.getElementsByTagName('input');
+			var i=0;
+			for(i=0;i<aImg.length;i++){
+				//求出鼠标到图片中心的距离
+				var x=aImg[i].offsetLeft+aImg[i].offsetWidth/2;
+				var y=aImg[i].offsetTop+oDiv.offsetTop+aImg[i].offsetHeight/2;
+				// aTxt[i].value='x:'+x+',y:'+y;
+				//注意offsetLeft表示是子级与父级的距离
+				//求鼠标与物体之间的距离
+				var a=x-oEvent.clientX;
+				//表示鼠标点到图片中心的距离
+				var b=y-oEvent.clientY;
+				var dis=Math.sqrt(a*a+b*b);
+				//计算两点之间的距离
+				// aTxt[i].value=parseInt(dis);
+				var scale=1-dis/100;
+				//表示由内向外放大
+				if(scale<0.5){
+					scale=0.5;
+				}
+				aImg[i].width=scale*128;
+				aTxt[i].value=scale.toFixed(2);
+				//toFixed()取两位小数
+			}
+
+		};
+
+	</script>
+</head>
+<body>
+<input type="text">
+<input type="text">
+<input type="text">
+<input type="text">
+<input type="text">
+<div id="div1">
+	<img src="images/1.png" alt="" width="64">
+	<img src="images/2.png" alt="" width="64">
+	<img src="images/3.png" alt="" width="64">
+	<img src="images/4.png" alt="" width="64">
+	<img src="images/5.png" alt="" width="64">
+	</div>
+</body>
+</html>

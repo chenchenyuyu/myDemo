@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>照片墙</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		.ul1{
+			width:660px;
+			position: relative;
+			margin:10px auto;
+
+		}
+		.ul1 li{
+			list-style: none;
+			width:200px;
+			height:150px;
+			float: left;
+			margin:10px;
+
+		}
+		.ul1 .active{
+			border:1px dashed red;
+		}
+	</style>
+	<script src="move.js"></script>
+	<script>
+		window.onload=function(){
+			var oUl=document.getElementsByClassName("ul1")[0];
+			var aLi=oUl.getElementsByTagName("li");
+			var aPos=[];
+			var i=0;
+			var iMinZindex=2;
+			//布局转换部分
+			for(i=0;i<aLi.length;i++){
+			aPos[i]={left:aLi[i].offsetLeft,top:aLi[i].offsetTop};
+
+		}
+		for(i=0;i<aLi.length;i++){
+			aLi[i].style.left=aPos[i].left+'px';
+			aLi[i].style.top=aPos[i].top+'px';
+			aLi[i].style.position='absolute';
+			aLi[i].style.margin='0';
+			aLi[i].index=i;
+		}
+			//拖拽
+			for(i=0;i<aLi.length;i++){
+				setDrag(aLi[i]);
+			}
+			function setDrag(obj){
+				obj.onmousedown=function(ev){
+					var oEvent=ev||event;
+					obj.style.zIndex=iMinZindex++;
+					var disX=oEvent.clientX-obj.offsetLeft;
+					var disY=oEvent.clientY-obj.offsetTop;
+					document.onmousemove=function(ev){
+						var oEvent=ev||event;
+						obj.style.left=oEvent.clientX-disX+'px';
+						obj.style.top=oEvent.clientY-disY+'px';
+
+						for(i=0;i<aLi.length;i++){
+							aLi[i].className="";
+						
+						}
+						var oNear=findNearest(obj);
+						if(oNear){
+						//检测到有碰撞的时候才进行
+							oNear.className="active";
+						//碰撞的时候才设置active
+						}
+						// for(i=0;i<aLi.length;i++){
+						// 	aLi[i].className='';
+						// 	//离开的时候虚线框效果消失
+						// 	if(obj==aLi[i])continue;
+						// 	//跳过与自身进行碰撞检测
+						// 	if(cdTest(obj,aLi[i])){
+						// 		aLi[i].className='active';
+						// 	}
+						// }
+					};
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null;
+
+						//运动
+						var oNear=findNearest(obj);
+						if(oNear){
+							//与其他物体碰撞的时候，两者交换位置
+							oNear.className='';
+							//解决图片从上面交换的问题
+							oNear.style.zIndex=iMinZindex++;
+							obj.style.zIndex=iMinZindex++;
+							//交换位置的时候顺便把样式的去除
+							startMove(oNear,aPos[obj.index]);
+							startMove(obj,aPos[oNear.index]);
+							//解决两者交换之后的zindex
+							var tmp=0;
+							tmp=obj.index;
+							obj.index=oNear.index;
+							oNear.index=tmp;
+
+						}else{
+							//被拖出去的时候再次拽回来
+							// startMove(obj,{left:aPos[obj.index].left,top:aPos[obj.index].top});
+						startMove(obj,aPos[obj.index]);
+						}
+
+
+					};
+					clearInterval(obj.timer);
+					//解决鼠标继续移动出现抖动的情况,当鼠标按下的时候，去除定时器
+					return false;
+					//浏览器出现的bug
+				};
+			}
+			//碰撞检测
+			function cdTest(obj1,obj2){
+				//obj1的上下左右边线位置
+				var l1=obj1.offsetLeft;
+				var r1=obj1.offsetLeft+obj1.offsetWidth;
+				var t1=obj1.offsetTop;
+				var b1=obj1.offsetTop+obj1.offsetHeight;
+				//obj2的上下左右边线位置
+				var l2=obj2.offsetLeft;
+				var r2=obj2.offsetLeft+obj1.offsetWidth;
+				var t2=obj2.offsetTop;
+				var b2=obj2.offsetTop+obj1.offsetHeight;
+				//bj2出现在obj1的周围
+				if(r1<l2||l1>r2||b1<t2||t1>b2){
+					return false;
+				}else{
+					return true;
+					}
+			
+				
+			}
+			function getDis(obj1,obj2){
+					var a=obj1.offsetLeft-obj2.offsetLeft;
+					var b=obj1.offsetTop-obj2.offsetTop;
+					return Math.sqrt(a*a+b*b);
+			}
+				
+			//检测碰上的，并且是最近的
+			function findNearest(obj){
+					var iMin=9999999;
+					var iMinZindex=-1;
+					for(i=0;i<aLi.length;i++){
+						if(obj==aLi[i])continue;
+						if(cdTest(obj,aLi[i])){
+							//检测到碰撞的时候才需要，计算它们的距离
+							var dis=getDis(obj,aLi[i]);
+							if(iMin>dis){
+								iMin=dis;
+								//找到两者之间的距离
+								iMinZindex=i;
+								//找到最小者的位置
+							}
+
+						}
+						
+					}
+					if(iMinZindex==-1){
+						return null;
+					}else{
+						return aLi[iMinZindex]; 
+						//返回最近的那个元素对象
+					}
+				}
+		
+	};
+	</script>
+</head>
+<body>
+	<ul class="ul1">
+		<li><img src="images/1.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/2.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/3.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/4.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/5.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/1.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/2.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/3.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/4.jpg" alt="" style="width:200px; height:150px;"></li>
+		<li><img src="images/5.jpg" alt="" style="width:200px; height:150px;"></li>
+	</ul>
+</body>
+</html>

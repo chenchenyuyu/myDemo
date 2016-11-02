@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新浪微博</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#ul1{
+			width:300px;
+			height:300px;
+			border:1px solid black;
+			margin: 10px auto;
+		}
+		#ul1 li{
+			list-style: none;
+			border-bottom: 1px dashed #999;
+			padding:2px;
+			overflow: hidden;
+			filter: alpha(opacity:0);
+			opacity: 0;
+			
+		}
+
+	</style>
+	<script src="move.js"></script>
+	<script>
+		window.onload=function(){
+			var oTxt=document.getElementById('txt1');
+			var oBtn=document.getElementById('btn1');
+			var oUl=document.getElementById('ul1');
+			oBtn.onclick=function(){
+				var oLi=document.createElement('li');
+				var aLi=oUl.getElementsByTagName('li');
+				oLi.innerHTML=oTxt.value;
+				oTxt.value='';
+				//oUl.appendChild(oLi);
+				if(aLi.length){
+					oUl.insertBefore(oLi,aLi[0]);
+				}else{
+					oUl.appendChild(oLi);
+
+				}
+				var iHeight=oLi.offsetHeight;
+				oLi.style.height=0;
+				startMove(oLi,{height: iHeight},function(){
+					startMove(oLi,{opacity:100});
+				});
+
+			};
+
+		};
+	</script>
+</head>
+<body>
+	<textarea id="txt1"  cols="40" rows="10"></textarea><br />
+<input type="button" id="btn1" value="发布">
+<ul id="ul1">
+	<li></li>
+</ul>
+</body>
+</html>

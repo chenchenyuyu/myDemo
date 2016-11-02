@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>json用于setStyle中</title>
+	<style type="text/css">
+		#div1{
+			width:100px;
+			height: 100px;
+			background: red;
+
+		}
+	</style>
+	<script type="text/javascript">
+		// function setStyle(obj,attr,value){
+		// 		obj.style[attr]=value;
+		// }
+		// window.onload=function(){
+		// 	var oDiv=document.getElementById('div1');
+		// 	setStyle(oDiv,'background','pink');
+		// 	setStyle(oDiv,'height','200px');
+		// 	setStyle(oDiv,'width','200px');
+		// }
+function setStyle(obj,json){
+			var attr='';
+				for(attr in json){
+					//console.log(attr);
+					obj.style[attr]=json[attr];
+				}
+				//obj.style[attr]=value;
+		}
+		window.onload=function(){
+			var oDiv=document.getElementById('div1');
+			setStyle(oDiv,{width:'200px',height:'200px',background:'yellow'});
+			
+		}
+	</script>
+
+</head>
+<body>
+	<div id="div1"></div>
+</body>
+</html>

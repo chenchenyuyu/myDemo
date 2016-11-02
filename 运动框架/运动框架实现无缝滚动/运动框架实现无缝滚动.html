@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>运动框架实现无缝滚动</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#div1{
+			position: relative;
+			border:1px solid black;
+			width:680px;
+			height: 132px;
+			margin:10px auto;
+			overflow: hidden;
+		}
+		#div1 ul{
+			position: absolute;
+			
+		}
+		#div1 ul li{
+			list-style: none;
+			float: left;
+			width:150px;
+			height:112px;
+			padding: 10px;
+		}
+		#div1 ul li img{
+			width:150px;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oDiv=document.getElementById('div1');
+			var oUl=oDiv.getElementsByTagName('ul')[0];
+			var aLi=oUl.getElementsByTagName('li');
+			var timer=null;
+			var iSpeed=1;
+			oUl.innerHTML+=oUl.innerHTML;
+			oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+			timer=setInterval(function(){
+				if(oUl.offsetLeft<-oUl.offsetWidth/2){
+					oUl.style.left=0+'px';
+				}
+				else if(oUl.offsetLeft>0){
+						oUl.style.left=-oUl.offsetWidth/2+'px';
+				}
+				oUl.style.left=oUl.offsetLeft+iSpeed+'px';
+			},30);
+		}
+	</script>
+</head>
+<body>
+<a href="javascript:;"> <-- </a>
+<a href="javascript:;">--></a>
+	<div id="div1">
+		<ul>
+			<li><img src="images/3.jpg" alt=""></li>
+			<li><img src="images/4.jpg" alt=""></li>
+			<li><img src="images/5.jpg" alt=""></li>
+			<li><img src="images/6.jpg" alt=""></li>
+		</ul>
+	</div>
+</body>
+</html>
