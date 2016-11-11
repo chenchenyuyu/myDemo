@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html5 web 存储</title>
+	<script>
+		function clickCounter(){
+			if(typeof(Storage)!=="undefined"){
+			if(localStorage.clickcount){
+				localStorage.clickcount=Number(localStorage.clickcount)+1;
+			}
+			else{
+				localStorage.clickcount=1;
+			}	
+			document.getElementById("result").innerHTML="你已经点击了按钮"+localStorage.clickcount+"次";
+			}
+			else{
+				document.getElementById("result").innerHTML="你的浏览器不支持web存储";
+			}
+		}
+	</script>	
+</head>
+<body>
+	<p><button onclick="clickCounter()" type="button">点我</button></p>
+	<div id="result"></div>
+	<p>点击该按钮查看计数器的增加</p>
+	<p>关闭浏览器选项卡（或窗口）重新打开此页面。计数器将继续计数（不是重置）</p>
+</body>
+</html>

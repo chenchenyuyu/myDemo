@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css3-3D</title>
+	<style>
+		.Qcontainer{
+			height: 100%;
+			width: 28%;
+			position: relative;
+			-webkit-perspective:800;
+			float:left;
+			margin-right: 2%;
+		}	
+		.film{
+			width: 100%;
+			height: 15em;
+			-webkit-transform-style:preserve-3d;
+			-webkit-transition:1s;
+		}
+		.Qcontainer:hover .film{
+			-webkit-transform:rotateY(180deg);
+		}
+		.face{
+			position: relative;
+			-webkit-backface-visibility:hidden;
+		}
+		.back{
+			width: 66%;
+			height: 127%;
+			-webkit-transform:rotateY(180deg);
+			background: #3b3b3b;
+			background: -webkit-linear-gradient(top,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%);
+			padding: 15%;
+		}
+	</style>
+</head>
+<body>
+	<section class="Qcontainer">
+		<div class="film">
+			<div class="face front">
+				<img src="css3/images/1.jpg" alt="the">
+			</div>
+			<div class="face back">
+				<h5>此电影评价十分好！</h5>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

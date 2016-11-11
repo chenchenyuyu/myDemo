@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5 Web SQL 数据库</title>
+	<script>
+		var db=openDatabase('mydb','1.0','Text DB',2*1024*1024);
+		//打开或创建数据库，‘Text DB’描述文本，2*1024*1024数据库的大小
+		var msg;
+		//创建数据表并且插入两条记录
+		db.transaction(function(tx){
+			tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique,log)');
+			tx.executeSql('INSERT INTO LOGS (id,log) VALUES (1,"记录1")');
+			tx.executeSql('INSERT INTO LOGS (id,log) VALUES (2,"记录2")');
+			//tx.executeSql('INSERT INTO LOGS (id,log) VALUES (3，"记录3")');
+			msg='<p>数据表已创建，且插入了两条记录</p>';
+			document.querySelector('#status').innerHTML=msg;
+		});
+		//删除记录
+		db.transaction(function(tx){
+			tx.executeSql('DELETE FROM LOGS WHERE id=1');
+			msg='<p>删除id=1的记录</p>';
+			document.querySelector('#status').innerHTML=msg;
+		});
+		//更新记录
+		db.transaction(function(tx){
+			tx.executeSql('UPDATE LOGS SET log=\'runoob.com\' WHERE in=2');
+			msg='<p>更新id为2的记录</p>';
+			document.querySelector('#status').innerHTML=msg;
+		});
+		//查询记录
+		db.transaction(function(tx){
+			tx.executeSql('SELECT * FROM LOGS',[],function(tx,results){
+				var len=results.rows.length,i;
+				msg="<p>查询记录条数："+len+"</p>";
+				document.querySelector('#status').innerHTML+=msg;
+				for(i=0;i<len;i++){
+					msg="<p><b>"+results.rows.item(i).log+"</b></p>";
+					document.querySelector('#status').innerHTML+=msg;
+				}
+			},null);	
+		});
+	</script>
+</head>
+<body>
+	<div id="status" name="status">状态信息</div>
+</body>
+</html>

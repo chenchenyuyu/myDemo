@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html5 web 存储1</title>
+	<script>
+		function clickCounter(){
+			if(typeof(Storage)!=="undefined"){
+			if(sessionStorage.clickcount){
+				sessionStorage.clickcount=Number(sessionStorage.clickcount)+1;
+			}else{
+				sessionStorage.clickcount=1;
+			}	
+			document.getElementById("result").innerHTML="在这个会话里面你已经点击该按钮"+sessionStorage.clickcount+"次";
+
+			}else{
+				document.getElementById("result").innerHTML="很抱歉你的浏览器不支持web存储";
+			}
+		}
+	</script>
+</head>
+<body>
+	<p><button onclick="clickCounter()">点击我</button></p>
+	<div id="result"></div>
+	<p>点击进行计数</p>
+	<p>当刷新浏览器时候，不会重新进行计数，而当关闭浏览器的窗口时，会重新进行计数</p>
+</body>
+</html>
