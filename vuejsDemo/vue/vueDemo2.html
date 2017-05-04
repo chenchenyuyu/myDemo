@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vueDemo2</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<h1 v-if="ok">yes</h1>
+	<h1 v-else>no</h1>
+	<template v-if="ok">
+		<h1>Title</h1>
+		<h1>p1</h1>
+		<h1>p2</h1>
+	</template>
+	<div v-if="Math.random()>0.5">now you see me</div>
+	<div v-else>now you don't</div>
+	<div v-if="type==='A'">a</div>
+	<div v-else-if="type='B'">b</div>
+	<div v-else-if="type==='C'">c</div>
+	<div v-else>not a/b/c</div>
+	<template v-if="loginType==='username'">
+		<label>username</label>
+		<input type="text" placeholder="Enter your username" key="username-input">		
+	</template>
+	<template>
+		<label>email</label>
+		<input type="text" palceholder="enter your email adress" key="email-input">
+	</template>
+	<ul id="example-1">
+		<li v-for="item in items">{{item.message}}</li>
+	</ul>
+	<ul id="example-2">
+		<li v-for="(item,index) of items">
+			{{parentMessage}}-{{index}}-{{item.message}}
+		</li>
+	</ul>
+	<ul>
+		<template v-for="item in items">
+			<li>{{item.msg}}</li>
+			<li class="divider"></li>
+		</template>
+	</ul>
+	<ul id="repeat-object" class="demo">
+		<li v-for="value in object">
+			{{value}}
+		</li>
+		<div v-for="(value,key) in object">
+			{{key}}:{{value}}
+		</div>
+		<div v-for="(value,key,index) in object">
+			{{index}}.{{key}}:{{value}}
+		</div>
+	</ul>
+		<div>
+			<span v-for="n in 10">{{n}}</span>
+		</div>
+		<div id="example-3">
+			<button v-on:click="counter+=1">增加1</button>
+			<p>这个按钮被点击了{{counter}}</p>
+		</div>
+		<div id="example-4">
+			<button v-on:click="greet">Greet</button>
+		</div>
+<input type="text" v-model="message" placeholder="edit me">
+<p>Message is:{{message}}</p>
+<input type="checkbox" id="checkbox" v-model="checked">
+<div id="example-6" class="demo">
+	<input type="radio" id="one" value="one" v-model="picked">
+	<label for="one">One</label>
+	<br>
+	<input type="radio" id="two" value="Two" v-model="picked">
+	<label for="two">Two</label>
+	<br>
+	<span>picked:{{picked}}</span>
+</div>
+<label for="checkbox">{{checked}}</label>
+	<script>
+	new Vue({
+		el:"#example-6",
+		data:{
+			picked:''
+		}
+	})
+		var example4=new Vue({
+			el:'#example-4',
+			data:{
+				name:'vue.js'
+			},
+			methods:{
+				greet:function(event){
+					//this在方法里指向当前的vue实例
+					alert('hello'+this.name+'!')
+					//event是原生DOM事件
+					// alert(event.target.tagName)
+				}
+			}
+		})
+example4.greet()
+		var example3=new Vue({
+			el:'#example-3',
+			data:{
+				counter:0
+			}
+		})
+		var example1=new Vue({
+			el:'#example-1',
+			data:{
+				items:[
+				{message:'Foo'},
+				{message:'Bar'}
+				]
+			}
+		})
+		example1.items.push({ message: 'Baz' })
+		var example2=new Vue({
+			el:"#example-2",
+			data:{
+				parentMessage:'Parent',
+				items:[
+					{message:'Foo'},
+					{message:'Bar'}
+				]
+			}
+		})
+		new Vue({
+			el:'#repeat-object',
+			data:{
+				object:{
+					FirstName:'JOHN',
+					LastName:'Doe',
+					Age:30
+				}
+			}
+		})
+	</script>
+</body>
+</html>

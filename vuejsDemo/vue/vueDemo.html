@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vuejs Demo</title>
+	<script src="vue.js"></script>
+</head>
+	<div id="app">
+		<p>{{message}}</p>
+	</div>
+	<div id="app-2">
+		<span v-bind:title="message">
+			fightingfighting
+		</span>
+	</div>
+	<div id="app-3">
+		<p v-if="seen">now you see me</p>
+	</div>
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{todo.text}}
+			</li>
+		</ol>
+	</div>
+	<div id="example">
+		<p>Original message:"{{message}}"</p>
+		<p>Computed reversed message:"{{reversedMessage}}"</p>
+	</div>
+	<div id="demo">{{fullName}}</div>
+	<div id="watch-example">
+		<p>ask a yes/no question:
+		<input v-model='question'>
+		</p>
+		<p>{{answer}}</p>
+	</div>
+	<div class="static" v-bind:class="{active:isActive,'text-danger':hasError}"></div>
+	<div v-bind:class="[activeClass,errorClass]"></div>
+	<div v-bind:class="[isActive?activeClass:'',errorClass]"></div>
+	<script>
+	new Vue({
+	el:'#app', 
+	data:{
+	message:"hello vue.js!"
+	}
+	})
+	var app2=new Vue({
+		el:'#app-2',
+		data:{
+			message:'You loaded this page on'+ new Date()
+		}
+	})
+	var app3=new Vue({
+		el:'#app-3',
+		data: {
+			seen:true
+		}
+	})
+	var app4=new Vue({
+		el:'#app-4',
+		data:{
+			todos:[
+			{text:'learn js'},
+			{text:'learn vue'},
+			{text:'build something awesome'}
+
+			]
+		}
+	})
+	var vm=new Vue({
+		el:'#example',
+		data:{
+			message:"hello"
+		},
+		computed:{
+			reversedMessage:function(){
+				return this.message.split('').reverse().join('')
+			}
+		}
+	})
+	console.log(vm.reversedMessage);
+	vm.message='goodbye'
+	console.log(vm.reversedMessage);
+	var vm=new Vue({
+		el:"#demo",
+		data:{
+			firstName:'Foo',
+			lastName:'Bar',
+			fullName:'Foo Bar'
+		},
+		watch:{//命令式，重复的代码
+			firstName:function(val){
+				this.fullName=val+''+this.lastName
+			},
+			lastName:function(val){
+				this.fullName=this.firstName+''+val
+			}
+		}
+	})
+	var vm=new Vue({
+		el:'#demo',
+		data:{
+			firstName:'Foo',
+			lastName:'Bar'
+		},
+		// computed:{//computed属性来观察和响应vue实例上面的数据变动
+		// 	fullName:function(){
+		// 		return this.firstName+''+this.lastName
+		// 	}
+		//实现setter属性
+		computed:{
+			fullName:{
+				get:function(){
+					return this.firstName+''+this.lastName
+				},
+				set:function(newValue){
+					var names=newValue.split('');
+					this.firstName=names[0];
+					this.lastName=names[names.length-1]
+
+
+				}
+			}
+		}
+		}
+	})
+	vm.fullName='John Doe'
+	</script>
+	
+</body>
+</html>

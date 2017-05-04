@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Demo</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="example">
+		<my-component></my-component>
+	</div>
+	<child message="hello"></child>
+	<P>skksk</P>
+	<div id="counter-event-example">
+		<p>{{total}}</p>
+		<button-counter v-on:increment="incrementTotal"></button-counter>
+		<button-counter v-on:increment="incrementTotal"></button-counter>
+	</div>
+	<div class="container">
+		<header>
+			<slot name="header"></slot>
+		</header>
+		<main>
+			<solt></solt>
+		</main>
+		<footer>
+			<solt name="footer"></solt>
+		</footer>
+		<div class="child">
+			<slot text="hello from child"></slot>
+		</div>
+		<div class="parent">
+			<child>
+				<template scope="props">
+					<span>hello from parent</span>
+					<span>{{props.text}}</span>
+				</template>
+			</child>
+		</div>
+	</div>
+	<script>
+	//注册组件
+		Vue.component('my-component',{
+			template:'<div>a custom component</div>'
+		})
+	//创建根实例
+		// new Vue({
+		// 	el:'#example'
+		// })
+		// Vue.component('child',{
+		// 	props:['message'],
+		// 	template:'<span>{{message}}</span>'
+
+		// }
+		//父子组件实现解耦
+		Vue.component('button-counter',{
+			template:'<button v-on:click="increment">{{counter}}</button>',
+			data:function(){
+				return {
+					counter:0
+				}
+			},
+			methods:{
+				increment:function(){
+					this.counter+=1
+					this.$emit('increment')
+				}
+			},
+		})
+		new Vue({
+			el:"#counter-event-example",
+			data:{
+				total:0
+			},
+			methods:{
+				incrementTotal:function(){
+					this.total+=1
+				}
+			}
+		})
+
+
+	</script>
+	<script type="text/x-template" id="hello-world-template">
+		<p>hello hello hello</p>
+	
+	</script>
+</body>
+</html>
