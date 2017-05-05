@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css animation</title>
+	<script src="vue.js"></script>
+<style>
+	.bounce-enter-active{
+		animation: bounce-in 0.5s;
+	}
+	.bounce-leave-active{
+		animation: bounce-out 0.5s;
+	}
+	@keyframes bounce-in{
+		0%{
+			transform: scale(0);
+		}
+		50%{
+			transform: scale(1.5);
+		}
+		100%{
+			transform: scale(1);
+		}
+	}
+	@keyframes bounce-out{
+		0%{
+			transform: scale(1);
+		}
+		50%{
+			transform: scale(1.5);
+		}
+		100%{
+			transform: scale(0);
+		}
+	}
+	.component-fade-enter-active,.component-fade-leave-active{
+		transition: opacity 0.3s ease;
+	}
+	.component-fade-enter,.component-fade-leave-active{
+		opacity: 0;
+	}
+	.list-item{
+		display: inline-block;
+		margin-right: 10px;
+	}
+	.list-enter-active,.list-leave-active{
+		transition: all 1s;
+	}
+	.list-enter,.list-leave-active{
+		opacity: 0;
+		transform: translateY(30px);
+	}
+</style>
+
+</head>
+<body>
+	<div id="example-1">
+		<button @click="show=!show">
+			Toggle show
+		</button>
+		<transition name="bounce">
+			<p v-if="show">look at me!</p>
+		</transition>
+	</div>
+	<div id="transition-components-demo">
+	<transition>
+		<button v-if="isEditing" key="save">
+			save
+		</button>
+		<button v-else key="edit">
+			Edit
+		</button>
+	</transition>
+	</div>
+ 	<transition name="component-fade" mode="out-in">
+ 		<component v-bind:is="view"></component>
+ 	</transition>
+ 	<div id="list-demo" class="demo">
+ 		<button v-on:click="add">add</button>
+ 		<button v-on:click="remove">remove</button>
+ 		<transition-group name="list" tag="p">
+			<span v-for="item in items" v-bind:key="item" class="list-item">
+				{{item}}
+			</span>
+ 		</transition-group>
+ 	</div>
+	<script>
+		new Vue({
+			el:"#example-1",
+			data:{
+				show:true
+			}
+		})
+		new Vue({
+			el:'#transition-components-demo',
+			data:{
+				view:'v-a'
+			},
+			components:{
+				'v-a':{
+					template:'<div>component a</div>'
+				},
+				'v-b':{
+					template:'<div>component b</div>'
+				}
+			}
+		})
+		new Vue({
+			el:'#list-demo',
+			data:{
+				items:[1,2,3,4,5,6,7,8,9],
+				nextNum:10
+			},
+			methods:{
+				randomIndex:function(){
+					return Math.floor(Math.random()*this.items.length)
+				},
+				add:function(){
+					this.items.splice(this.randomIndex(),0,this.nextNum++)
+				},
+				remove:function(){
+					this.items.splice(this.randomIndex(),1)
+				}
+			}
+		})
+	</script>
+</body>
+</html>
