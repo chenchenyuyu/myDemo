@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task13</title>
+</head>
+<body>
+	<label for="task13">请输入北京今天空气的质量:<input id="aqi-input" type="text"></label>
+	<button id="button">确认填写</button>
+
+	<div>你输入的值是:<span id="aqi-display">尚无录入</span></div>
+<script>
+	(function(){
+		var $=function(id){
+			return document.getElementById(id);
+		}
+		var handler=function(){
+			var num=parseInt(($('aqi-input').value).replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g,""));
+			//去除空格
+			// if((!isNaN(num))&&(num>=0)&&(num<=1000)){
+			// 	$("aqi-display").innerHTML=num;
+			// }else{
+			// 	alert("不是有效的数字");
+			// }
+			if(num.length>0){
+				if($("aqi-display").textContent!=null){
+					$("aqi-display").textContent=num;
+				}else{
+					$("aqi-display").innerHTML=num.replace(/[<>]/ig,"");//避免xss攻击
+				}
+			}
+		}
+		if($("button").attachEvent){
+			$("button").attachEvent("onclick",handler);//IE
+		}else{
+			$("button").addEventListener("click",handler,false);
+		}
+		// $("button").onclick=function(){
+		// 	handler();
+		// }
+		$("aqi-input").onkeyup=function(event){
+			if(event.keyCode===13){
+				handler();
+			}//考虑回车
+		}
+
+	})();
+</script>
+</body>
+</html>
+

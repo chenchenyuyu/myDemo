@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task15</title>
+</head>
+<body>
+<ul id="source">
+	<li>北京空气质量：<b>90</b></li>
+	<li>上海空气质量：<b>70</b></li>
+    <li>天津空气质量：<b>80</b></li>
+    <li>广州空气质量：<b>50</b></li>
+    <li>深圳空气质量：<b>40</b></li>
+    <li>福州空气质量：<b>32</b></li>
+    <li>成都空气质量：<b>90</b></li>
+</ul>
+<ul id="resort">
+	
+</ul>
+<button id="sort">排序</button>
+<script>
+	//获取城市中的城市的名字以及对应的空气质量
+	function getData(){
+		var oUl=document.getElementById("source");
+		var data=[];
+		for(var i=0;i<oUl.childElementCount;i++){
+			var li=oUl.children[i];
+			var strCity=li.innerHTML.split("空气质量：")[0];
+			//split将字符串分割成数组，再进行[0]下标选取
+			console.log(strCity);
+			var num=Number(li.children[0].innerHTML);
+			data.push([strCity,num]);
+
+		}
+		// data=[
+		// 	["北京",90],
+		// 	["北京",90]
+		// ];
+		return data;//返回数据
+	}
+	//按空气中的质量对data进行排序
+	function sortAqiData(data){
+		data.sort(function(d1,d2){
+			return d2[1]-d1[1];//从大到小进行排序
+		});
+		return data;
+
+	}
+	function render(data){
+		var oRe=document.getElementById("resort");
+		var arr=["一","二","三","四","五","六","七","八","九","十"];
+		// for(var i=0;i<data.length;i++){
+		// 	var li=document.createElement("li");
+		// 	li.append(document.createTextNode("第"+arr[i]+"名:"+data[0]+"空气质量")+"<b>"+data[1]+"</b>");
+		// 	oRe.append(li);
+		// }
+		//修改上面每次更新li都要重新渲染的问题。
+		var items="";
+		for(var i=0;i<data.length;i++){
+			var aqiData=data[i];
+	  items+='<li>第'+arr[i]+'名：'+aqiData[0]+'空气质量：<b>'+aqiData[1]+'</b></li>';
+		}
+		console.log(items);
+		oRe.innerHTML=items;//一次渲染
+ 
+	}
+	function btnHandle(){
+		var aqiData=getData();
+		aqiData=sortAqiData(aqiData);
+		render(aqiData);
+		var btn=document.getElementById("sort");
+		btn.disabled=true;//防止用户重复点击按钮
+	}
+	function init(){
+		//在下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
+		var btn=document.getElementById("sort");
+		btn.onclick=btnHandle;
+	}
+	init();
+</script>
+</body>
+</html>
