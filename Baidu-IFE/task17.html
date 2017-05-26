@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task17</title>
+	<link rel="stylesheet" href="styles/task17.css">
+</head>
+<body>
+	<fieldset id="form-gra-time" class="clearfix">
+		<legend>选择日期粒度以及城市：</legend>
+	<div class="date">
+	<label>
+		<span class="selected">日</span>
+		<input type="radio" name="gra-time" value="day" checked="checked">
+
+	</label>
+	<label>
+		<span>周</span>
+		<input type="radio" name="gra-time" value="week">
+	</label>
+	<label>
+		<span>月</span>
+		<input type="radio" name="gra-time" value="month">
+	</label>
+	</div>
+	<div class="select">
+		<select  id="city-select">
+			<option>北京</option>
+		</select>
+	</div>
+	</fieldset>
+	<div id="aqi-chart-wrap">
+		
+	</div>
+	<script src="scripts/task17.js"></script>
+</body>
+</html>
