@@ -1,0 +1,16 @@
+*{
+	margin:0;
+	padding: 0;
+}
+ul{
+	margin-top: 10px;
+	vertical-align:bottom;
+}
+li{
+	display: inline-block;
+	margin-left: 4px;
+	width:14px;
+	background-color: red;
+	color:#fff;
+	list-style-type:none;
+}

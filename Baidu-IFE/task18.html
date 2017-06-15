@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task18</title>
+	<style>
+		#container div{
+			display: inline-block;
+			margin-right: 10px;
+			background: pink;
+			color: #000;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="btn">
+		<input type="text">
+		<input type="button" class="left-in" value="左侧人">
+		<input type="button" class="right-in" value="右侧入">
+		<input type="button" class="left-out" value="左侧出">
+		<input type="button" class="right-out" value="右侧出">
+	</div> 
+	<div id="container">
+		
+	</div>
+	<script>
+	
+	//事件绑定函数，兼容浏览器差异
+		function addEvent(ele,event,listener){
+			if(ele.addEventListener){
+				ele.addEventListener(event,listener,false);
+			}
+			else if(ele.attachEvent){
+				ele.attachEvent("on"+event,listener);
+			}else{
+				ele["on"+event]=listener;
+			}
+
+		}
+
+		//遍历数组的方法，针对数组中的每一个元素执行fn函数，并将数组索引和元素作为参数传递，后面使用
+		function each(arr,fn){
+			for(var i=0;i<arr.length;i++){
+				fn(arr[i],i);
+			}
+		}
+		window.onload=function(){
+			var container=document.getElementById("container");
+			var buttonList=document.getElementsByTagName("input");
+		//定义队列的对象
+		var queue={
+			str:[],
+			//左侧入
+			leftPush:function(num){
+				this.str.unshift(num);
+				this.paint();
+			},
+			//右侧入
+			rightPush:function(num){
+				this.str.push(num);
+				this.paint();
+			},
+			isEmpty:function(){
+				return (this.str.length==0);
+			},
+			//左侧出
+			leftPop:function(){
+				if(!this.isEmpty()){
+					alert(this.str.shift());
+					this.paint();
+				}else{
+					alert("this queue is already empty!");
+				}
+			},
+			//右侧出
+			rightPop:function(){
+				if(!this.isEmpty()){
+					alert(this.str.pop());
+					this.paint();
+				}else{
+					alert("this queue is already empty!");
+				}
+			},
+			paint:function(){
+				var str="";
+				each(this.str,function(item){
+				str+=("<div>"+parseInt(item)+"</div>")	
+				});
+				container.innerHTML=str;
+				addDivDelEvent();
+			},
+			deleteID:function(id){
+				this.str.splice(id,1);
+				this.paint();
+				console.log(id);
+			}
+
+		}
+		//为container中的每一个div绑定删除函数
+		function addDivDelEvent(){
+			for(var i=0;i<container.childNodes.length;i++){
+			addEvent(container.childNodes[i],"click",function(i){
+				return function(){return queue.deleteID(i);}
+			}(i));	
+			}
+		}
+		//为4个按钮绑定函数
+		addEvent(buttonList[1],"click",function(){
+			var input=buttonList[0].value;
+			if((/^[0-9]+$/).test(input)){
+				queue.leftPush(input);
+			}else{
+				alert("please enter interger!");
+			}
+		});
+		addEvent(buttonList[2],"click",function(){
+			var input=buttonList[0].value;
+			if((/^[0-9]+$/).test(input)){
+				queue.rightPush(input);
+			}else{
+				alert("please enter an interger!");
+			}
+		});
+		addEvent(buttonList[3],"click",function(){
+			queue.leftPop();
+		});
+		addEvent(buttonList[4],"click",function(){
+			queue.rightPop();
+		});
+		
+		}
+	</script>
+</body>
+</html>

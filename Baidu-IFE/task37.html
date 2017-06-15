@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task37</title>
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/task37.css">
+</head>
+<body>
+	<header>
+		<ul>
+			<li class="signin-link" id="loginLink"><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+		</ul>
+	</header>
+		<p>点击半透明遮罩或者顶部按钮可以关闭按钮，关闭浮出层</p>
+		<p>点击页面深绿色头部登录按钮，显示浮出层</p>
+		<p>拖拽浮出层顶部，可以使其移动</p>
+		<p>拖拽浮出层右边框或者下边框，可以改变其大小</p>
+		<div class="mask" id="mask"></div>
+	<div class="login-box" id="loginBox">
+		<div class="login-box-header" id="loginBoxHeader">
+			<p>登录<input type="button" class="close-btn" id="closeBtn" value="x"></p>
+		</div>
+		<div class="login-content">
+			<form action="#" method="post">
+				<input type="text" name="username" placeholder="请输入用户的姓名:">
+				<input type="text" name="password" type="password" placeholder="请输入用户的密码:">
+				<input type="button" value="登录">
+			</form>
+		</div>
+	</div>
+	<script src="scripts/task37.js"></script>
+</body>
+</html>
