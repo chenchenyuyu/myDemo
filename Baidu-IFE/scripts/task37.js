@@ -55,8 +55,73 @@ function mouseMove(e){
 	mouseY=e.pageY;
 	var moveX=0;
 	var moveY=0;
-	if(){
+	if(isDraging===true){
+		moveX=mouseX-mouseOffsetX;
+		moveY=mouseY-mouseOffsetY;
+//获取页面的宽高度
+var pageWidth=document.documentElement.clientWidth;
+var pageHeight=document.documentElement.clientHeight;
+//获取浮出层的宽高度
+var loginBoxWidth=g("loginBox").offsetWidth;
+var loginBoxHeight=g("loginBox").offsetHeight;
 
+var maxMoveX=pageWidth-loginBoxWidth;
+var maxMoveY=pageHeight-loginBoxHeight;
+
+//moveX=moveX>0?moveX:0;
+//moveY=moveX<maxMoveX?moveX:maxMoveX;
+moveX=Math.min(maxMoveX,Math.max(0,moveX));
+moveY=Math.min(maxMoveY,Math.max(0,moveY));
+g("loginBox").style.left=moveX+"px";
+g("loginBox").style.top=moveY+"px";
 	}
 };
 
+var mousePanel,mouseCtrl,mouseType;
+var moving=0,mouseStartX=0,mouseStartY=0;
+function mouseDown(e,panel,ctrl,type){
+	var e=e||window.event;
+	mouseStartX=e.pageX-ctrl.offsetLeft;
+	mouseStartY=e.pageY-ctrl.offsetTop;
+	mousePanel=panel;
+	mouseCtrl=ctrl;
+	mouseType=type;
+	moving=setInterval(onMove,10);
+}
+
+function onMove(){
+	if(moving){
+		var toX=mouseX-mouseStartX;
+		var toY=mouseY-mouseStartY;
+		//限定浮出层的最大宽度
+		var maxToX=document.documentElement.clientWidth-mousePanel.offsetLeft-10;
+		var maxToY=document.documentElement.clientWidth-mousePanel.offsetTop-10;
+		toX=Math.min(maxToX,Math.max(toX,300));
+		toY=Math.min(maxToY,Math.max(toY,200));
+		switch(mouseType){
+			case "r":
+			mouseCtrl.style.left=toX+"px";
+			mousePanel.style.width=toX+"px";
+			break;
+			case "b":
+			mouseCtrl.style.top=toY+"px";
+			mousePanel.style.height=toY+"px";
+			break;
+			case "rb":
+			mouseCtrl.style.left=toX-8+"px";
+			mouseCtrl.style.top=toY-8+"px";
+			mousePanel.style.width=toX+"px";
+			mousePanel.style.height=toY+"px";
+			break;
+		}	
+	}
+}
+ function mouseUp(){
+ 	isDraging=false;
+ 	clearInterval(moving);
+ 	var cls=document.getElementByClassName("resizable-box");
+ 	for(var i=0;i<cls.length;i++){
+ 		cls[i].style.left="";
+ 		cls[i].style.top="";
+ 	}
+ }
