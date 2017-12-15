@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset='utf-8'>
+		<style type="text/css">
+			#div{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body> 
+		<div id='div'></div>
+	</body>
+	<script type="text/javascript">
+var a = document.getElementById('div')
+a.onmousedown = function(ev) {
+	var oEvent = ev || event
+	var disX = oEvent.clientX - a.offsetLeft;//鼠标距离div边框的距离
+	var disY = oEvent.clientY - a.offsetTop;
+
+	if (a.setCapture) {
+		a.onmousemove = moveArea
+		a.onmouseup = upArea
+		a.setCapture()
+	} else{
+		document.onmousemove = moveArea
+		document.onmouseup = upArea
+	}
+
+	function moveArea(ev) {
+		var oEvent = ev || event
+		var l = oEvent.clientX - disX
+		var t = oEvent.clientY - disY
+		// 不会超出可视区
+		if(l < 0) {
+			l = 0
+		}
+		else if (l > document.documentElement.clientWidth - a.offsetWidth) {
+			l = document.documentElement.clientWidth - a.offsetWidth
+		};
+		if(t < 0) {
+			t = 0
+		}	
+		else if (t > document.documentElement.clientHeight - a.offsetHeight) {
+			t = document.documentElement.clientHeight - a.offsetHeight
+		};
+		a.style.left = l + 'px'
+		a.style.top = t + 'px'
+	}
+	//防止鼠标移动过快
+	function upArea() {
+		this.onmousemove = null
+		this.onmouseup = null
+		if (a.releaseCapture) {
+			a.releaseCapture()
+		};
+	}
+	return false;
+}
+	</script>
+</html>
